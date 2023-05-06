@@ -7,7 +7,7 @@ public class Peca {
 	private Tabuleiro tabuleiro;
 	
 	// Criando o construtor
-	public Peca(Posicao posicao, Tabuleiro tabuleiro) {
+	public Peca(Tabuleiro tabuleiro) {
 		this.tabuleiro = tabuleiro;
 		posicao = null;
 	}
