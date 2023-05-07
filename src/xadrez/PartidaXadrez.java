@@ -98,7 +98,8 @@ public class PartidaXadrez {
 	 * na lista de peças capturadas
 	 */
 	private Peca fazerJogada(Posicao origem, Posicao destino) {
-		Peca p = tabuleiro.removerPeca(origem);
+		PecaXadrez p = (PecaXadrez) tabuleiro.removerPeca(origem);
+		p.incrementarContadorMovimentos();
 		Peca pecaCapturada = tabuleiro.removerPeca(destino);
 		tabuleiro.colocarPeca(p, destino);
 
@@ -112,7 +113,8 @@ public class PartidaXadrez {
 
 	// Método para desfazer uma jogada (caso o Rei estiver em xeque)
 	private void desfazerJogada(Posicao origem, Posicao destino, Peca pecaCapturada) {
-		Peca p = tabuleiro.removerPeca(destino);
+		PecaXadrez p = (PecaXadrez) tabuleiro.removerPeca(destino);
+		p.decrementarContadorMovimentos();
 		tabuleiro.colocarPeca(p, origem);
 
 		if (pecaCapturada != null) {
@@ -141,7 +143,7 @@ public class PartidaXadrez {
 			throw new ExcecaoXadrez("A peça escolhida não pode se mover para a posição de destino.");
 		}
 	}
-	
+
 	// Método para implementar o sistema de turnos
 	private void proximoTurno() {
 		turno++;
