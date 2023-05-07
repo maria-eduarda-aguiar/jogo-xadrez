@@ -10,6 +10,11 @@ public class Peao extends PecaXadrez {
 	public Peao(Tabuleiro tabuleiro, Cor cor) {
 		super(tabuleiro, cor);
 	}
+	
+	@Override
+	public String toString() {
+		return "P";
+	}
 
 	@Override
 	public boolean[][] movimentosPossiveis() {
@@ -85,10 +90,4 @@ public class Peao extends PecaXadrez {
 
 		return matriz;
 	}
-	
-	@Override
-	public String toString() {
-		return "P";
-	}
-
 }
