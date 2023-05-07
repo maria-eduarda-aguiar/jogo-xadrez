@@ -6,19 +6,19 @@ import tabuleiro.Tabuleiro;
 import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
 
+//Classe que irá conter as regras do jogo
 public class PartidaXadrez {
-	
-	// Classe que irá conter as regras do jogo
+
 	private Tabuleiro tabuleiro;
-	
-	// Construtor da partida de xadrez 
+
+	// Construtor da partida de xadrez
 	public PartidaXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);
 		configInicial();
 	}
-	
+
 	// Método para retornar uma matriz de peças de xadrez
-	public PecaXadrez[][] getPecas(){
+	public PecaXadrez[][] getPecas() {
 		PecaXadrez[][] matriz = new PecaXadrez[tabuleiro.getLinhas()][tabuleiro.getColunas()];
 		for (int i = 0; i < tabuleiro.getLinhas(); i++) {
 			for (int j = 0; j < tabuleiro.getColunas(); j++) {
@@ -27,40 +27,57 @@ public class PartidaXadrez {
 		}
 		return matriz;
 	}
-	
-	// Método para executar uma jogada e validar
+
+	// Método para executar uma jogada e validar a posição de origem e destino
 	public PecaXadrez executarJogadaXadrez(PosicaoXadrez posicaoOrigem, PosicaoXadrez posicaoDestino) {
-		Posicao origem = posicaoOrigem.toPosicao();	
+		Posicao origem = posicaoOrigem.toPosicao();
 		Posicao destino = posicaoDestino.toPosicao();
 		validarPosicaoOrigem(origem);
+		validarPosicaoDestino(origem, destino);
 		Peca pecaCapturada = fazerJogada(origem, destino);
-		return (PecaXadrez)pecaCapturada;
+		return (PecaXadrez) pecaCapturada;
 	}
-	
-	// Método para fazer uma jogada após a validação e captura a peça caso ela exista
+
+	/*
+	 * Método para fazer uma jogada após a validação e capturar uma peça caso ela
+	 * exista
+	 */
 	private Peca fazerJogada(Posicao origem, Posicao destino) {
 		Peca p = tabuleiro.removerPeca(origem);
 		Peca pecaCapturada = tabuleiro.removerPeca(destino);
 		tabuleiro.colocarPeca(p, destino);
 		return pecaCapturada;
 	}
-	
+
 	// Método para validar a posição de origem
 	private void validarPosicaoOrigem(Posicao posicao) {
 		if (!tabuleiro.existePeca(posicao)) {
 			throw new ExcecaoXadrez("Não há peça na posição de origem.");
 		}
 		if (!tabuleiro.peca(posicao).existeMovimentoPossivel()) {
-			throw new ExcecaoXadrez("Não existe movimentos possíveis para a peça escolhida.");
+			throw new ExcecaoXadrez("Não existem movimentos possíveis para a peça escolhida.");
 		}
 	}
-	
-	// Método para colocar uma nova peça já convertendo a posição de matriz padrão para o padrão do xadrez
+
+	// Método para validar a posição de destino
+	private void validarPosicaoDestino(Posicao origem, Posicao destino) {
+		if (!tabuleiro.peca(origem).movimentoPossivel(destino)) {
+			throw new ExcecaoXadrez("A peça escolhida não pode se mover para a posição de destino.");
+		}
+	}
+
+	/*
+	 * Método para colocar uma nova peça já convertendo a posição de matriz padrão
+	 * para o padrão do xadrez
+	 */
 	private void colocarNovaPeca(char coluna, int linha, PecaXadrez peca) {
 		tabuleiro.colocarPeca(peca, new PosicaoXadrez(coluna, linha).toPosicao());
 	}
-	
-	// Método responsável por iniciar a partida de xadrez colocando as peças no tabuleiro
+
+	/*
+	 * Método responsável por iniciar a partida de xadrez colocando as peças no
+	 * tabuleiro
+	 */
 	private void configInicial() {
 		colocarNovaPeca('c', 1, new Torre(tabuleiro, Cor.WHITE));
 		colocarNovaPeca('c', 2, new Torre(tabuleiro, Cor.WHITE));
