@@ -7,9 +7,11 @@ import xadrez.PecaXadrez;
 import xadrez.PosicaoXadrez;
 
 public class UI {
-
-	// https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
-
+	
+	/*
+	 * Alterar as cores da fonte e background do terminal
+	 * Fonte: https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
+	*/
 	public static final String ANSI_RESET = "\u001B[0m";
 	public static final String ANSI_BLACK = "\u001B[30m";
 	public static final String ANSI_RED = "\u001B[31m";
@@ -28,7 +30,17 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-
+	
+	/*
+	 * Método para limpar a tela do terminal
+	 * Fonte: https://stackoverflow.com/questions/2979383/java-clear-the-console
+	 */
+	public static void limparTela() {
+		System.out.print("\033[H\033[2J");  
+	    System.out.flush();
+	}
+	
+	
 	// Método para ler uma posição de xadrez
 	public static PosicaoXadrez lerPosicaoXadrez(Scanner sc) {
 		try {
