@@ -8,13 +8,26 @@ import xadrez.pecas.Torre;
 
 //Classe que irá conter as regras do jogo
 public class PartidaXadrez {
-
+	
+	private int turno;
+	private Cor jogadorAtual;
 	private Tabuleiro tabuleiro;
 
 	// Construtor da partida de xadrez
 	public PartidaXadrez() {
 		tabuleiro = new Tabuleiro(8, 8);
+		turno = 1;
+		jogadorAtual = Cor.WHITE;
 		configInicial();
+	}
+	
+	// Criação dos getters
+	public int getTurno() {
+		return turno;
+	}
+	
+	public Cor getJogadorAtual() {
+		return jogadorAtual;
 	}
 
 	// Método para retornar uma matriz de peças de xadrez
@@ -42,6 +55,7 @@ public class PartidaXadrez {
 		validarPosicaoOrigem(origem);
 		validarPosicaoDestino(origem, destino);
 		Peca pecaCapturada = fazerJogada(origem, destino);
+		proximoTurno();
 		return (PecaXadrez) pecaCapturada;
 	}
 
@@ -61,6 +75,9 @@ public class PartidaXadrez {
 		if (!tabuleiro.existePeca(posicao)) {
 			throw new ExcecaoXadrez("Não há peça na posição de origem.");
 		}
+		if (jogadorAtual != ((PecaXadrez)tabuleiro.peca(posicao)).getCor()) {
+			throw new ExcecaoXadrez("A peça escolhida não é sua.");
+		}
 		if (!tabuleiro.peca(posicao).existeMovimentoPossivel()) {
 			throw new ExcecaoXadrez("Não existem movimentos possíveis para a peça escolhida.");
 		}
@@ -71,6 +88,11 @@ public class PartidaXadrez {
 		if (!tabuleiro.peca(origem).movimentoPossivel(destino)) {
 			throw new ExcecaoXadrez("A peça escolhida não pode se mover para a posição de destino.");
 		}
+	}
+	
+	private void proximoTurno() {
+		turno++;
+		jogadorAtual = (jogadorAtual == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
 	}
 
 	/*
