@@ -28,6 +28,13 @@ public class PartidaXadrez {
 		return matriz;
 	}
 
+	// Posições possíveis a partir de uma posição de origem
+	public boolean[][] movimentosPossiveis(PosicaoXadrez posicaoOrigem) {
+		Posicao posicao = posicaoOrigem.toPosicao();
+		validarPosicaoOrigem(posicao);
+		return tabuleiro.peca(posicao).movimentosPossiveis();
+	}
+
 	// Método para executar uma jogada e validar a posição de origem e destino
 	public PecaXadrez executarJogadaXadrez(PosicaoXadrez posicaoOrigem, PosicaoXadrez posicaoDestino) {
 		Posicao origem = posicaoOrigem.toPosicao();
