@@ -66,6 +66,9 @@ public class UI {
 		System.out.println();
 		System.out.println("Turno: " + partidaXadrez.getTurno());
 		System.out.println("Aguardando jogador: " + partidaXadrez.getJogadorAtual());
+		if (partidaXadrez.getXeque()) {
+			System.out.println("Você está em xeque!");
+		}
 	}
 
 	// Método para imprimir o tabuleiro
@@ -111,9 +114,11 @@ public class UI {
 
 	// Metódo para imprimir as peças capturadas
 	private static void imprimirPecasCapturadas(List<PecaXadrez> capturada) {
-	
-		List<PecaXadrez> branca = capturada.stream().filter(peca -> peca.getCor() == Cor.WHITE).collect(Collectors.toList());
-		List<PecaXadrez> preta = capturada.stream().filter(peca -> peca.getCor() == Cor.BLACK).collect(Collectors.toList());
+
+		List<PecaXadrez> branca = capturada.stream().filter(peca -> peca.getCor() == Cor.WHITE)
+				.collect(Collectors.toList());
+		List<PecaXadrez> preta = capturada.stream().filter(peca -> peca.getCor() == Cor.BLACK)
+				.collect(Collectors.toList());
 		System.out.println("Peças capturadas:");
 		System.out.print("Brancas: ");
 		System.out.print(ANSI_WHITE);
@@ -125,6 +130,6 @@ public class UI {
 		System.out.print(Arrays.toString(preta.toArray()));
 		System.out.print(ANSI_RESET);
 		System.out.println();
-	
+
 	}
 }
