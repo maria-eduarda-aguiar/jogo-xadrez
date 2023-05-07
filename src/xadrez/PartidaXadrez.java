@@ -50,6 +50,9 @@ public class PartidaXadrez {
 		if (!tabuleiro.existePeca(posicao)) {
 			throw new ExcecaoXadrez("Não há peça na posição de origem.");
 		}
+		if (!tabuleiro.peca(posicao).existeMovimentoPossivel()) {
+			throw new ExcecaoXadrez("Não existe movimentos possíveis para a peça escolhida.");
+		}
 	}
 	
 	// Método para colocar uma nova peça já convertendo a posição de matriz padrão para o padrão do xadrez
