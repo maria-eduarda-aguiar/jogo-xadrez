@@ -65,9 +65,14 @@ public class UI {
 		imprimirPecasCapturadas(capturada);
 		System.out.println();
 		System.out.println("Turno: " + partidaXadrez.getTurno());
-		System.out.println("Aguardando jogador: " + partidaXadrez.getJogadorAtual());
-		if (partidaXadrez.getXeque()) {
-			System.out.println("Você está em xeque!");
+		if (!partidaXadrez.getXequeMate()) {
+			System.out.println("Aguardando jogador: " + partidaXadrez.getJogadorAtual());
+			if (partidaXadrez.getXeque()) {
+				System.out.println("Você está em XEQUE!");
+			}
+		} else {
+			System.out.println("XEQUE-MATE! Fim de jogo.");
+			System.out.println("Vencedor: " + partidaXadrez.getJogadorAtual());
 		}
 	}
 
@@ -112,7 +117,7 @@ public class UI {
 		System.out.print(" ");
 	}
 
-	// Metódo para imprimir as peças capturadas
+	// Método para imprimir as peças capturadas
 	private static void imprimirPecasCapturadas(List<PecaXadrez> capturada) {
 
 		List<PecaXadrez> branca = capturada.stream().filter(peca -> peca.getCor() == Cor.WHITE)
@@ -130,6 +135,5 @@ public class UI {
 		System.out.print(Arrays.toString(preta.toArray()));
 		System.out.print(ANSI_RESET);
 		System.out.println();
-
 	}
 }

@@ -17,6 +17,7 @@ public class PartidaXadrez {
 	private Cor jogadorAtual;
 	private Tabuleiro tabuleiro;
 	private boolean xeque;
+	private boolean xequeMate;
 
 	private List<Peca> pecasNoTabuleiro = new ArrayList<>();
 	private List<Peca> pecasCapturadas = new ArrayList<>();
@@ -37,9 +38,13 @@ public class PartidaXadrez {
 	public Cor getJogadorAtual() {
 		return jogadorAtual;
 	}
-	
+
 	public boolean getXeque() {
 		return xeque;
+	}
+
+	public boolean getXequeMate() {
+		return xequeMate;
 	}
 
 	// Método para retornar uma matriz de peças de xadrez
@@ -60,22 +65,30 @@ public class PartidaXadrez {
 		return tabuleiro.peca(posicao).movimentosPossiveis();
 	}
 
-	// Método para executar uma jogada e validar a posição de origem e destino
+	/*
+	 * Método para executar uma jogada, validar a posição de origem e destino,
+	 * verificar se o Rei se encontra em xeque ou xeque-mate
+	 */
 	public PecaXadrez executarJogadaXadrez(PosicaoXadrez posicaoOrigem, PosicaoXadrez posicaoDestino) {
 		Posicao origem = posicaoOrigem.toPosicao();
 		Posicao destino = posicaoDestino.toPosicao();
 		validarPosicaoOrigem(origem);
 		validarPosicaoDestino(origem, destino);
 		Peca pecaCapturada = fazerJogada(origem, destino);
-		
+
 		if (verificarXeque(jogadorAtual)) {
 			desfazerJogada(origem, destino, pecaCapturada);
 			throw new ExcecaoXadrez("Você não pode se colocar em xeque.");
 		}
-		
+
 		xeque = (verificarXeque(oponente(jogadorAtual))) ? true : false;
-		
-		proximoTurno();
+
+		if (verificarXeque(oponente(jogadorAtual))) {
+			xequeMate = true;
+		} else {
+			proximoTurno();
+		}
+
 		return (PecaXadrez) pecaCapturada;
 	}
 
@@ -128,7 +141,8 @@ public class PartidaXadrez {
 			throw new ExcecaoXadrez("A peça escolhida não pode se mover para a posição de destino.");
 		}
 	}
-
+	
+	// Método para implementar o sistema de turnos
 	private void proximoTurno() {
 		turno++;
 		jogadorAtual = (jogadorAtual == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
@@ -139,7 +153,7 @@ public class PartidaXadrez {
 		return (cor == Cor.WHITE) ? Cor.BLACK : Cor.WHITE;
 	}
 
-	// Método para encontrar o rei no tabuleiro
+	// Método para encontrar o Rei no tabuleiro
 	private PecaXadrez rei(Cor cor) {
 		List<Peca> lista = pecasNoTabuleiro.stream().filter(peca -> ((PecaXadrez) peca).getCor() == cor)
 				.collect(Collectors.toList());
@@ -169,6 +183,33 @@ public class PartidaXadrez {
 		return false;
 	}
 
+	// Método para verificar se o Rei está em xeque-mate
+	private boolean verificarXequeMate(Cor cor) {
+		if (!verificarXeque(cor)) {
+			return false;
+		}
+		List<Peca> lista = pecasNoTabuleiro.stream().filter(peca -> ((PecaXadrez) peca).getCor() == cor)
+				.collect(Collectors.toList());
+		for (Peca peca : lista) {
+			boolean[][] matriz = peca.movimentosPossiveis();
+			for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+				for (int j = 0; j < tabuleiro.getColunas(); j++) {
+					if (matriz[i][j]) {
+						Posicao origem = ((PecaXadrez) peca).getPosicaoXadrez().toPosicao();
+						Posicao destino = new Posicao(i, j);
+						Peca pecaCapturada = fazerJogada(origem, destino);
+						boolean verificaXeque = verificarXeque(cor);
+						desfazerJogada(origem, destino, pecaCapturada);
+						if (!verificaXeque) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 	/*
 	 * Método para colocar uma nova peça já convertendo a posição de matriz padrão
 	 * para o padrão do xadrez
@@ -183,18 +224,11 @@ public class PartidaXadrez {
 	 * tabuleiro
 	 */
 	private void configInicial() {
-		colocarNovaPeca('c', 1, new Torre(tabuleiro, Cor.WHITE));
-		colocarNovaPeca('c', 2, new Torre(tabuleiro, Cor.WHITE));
-		colocarNovaPeca('d', 2, new Torre(tabuleiro, Cor.WHITE));
-		colocarNovaPeca('e', 2, new Torre(tabuleiro, Cor.WHITE));
-		colocarNovaPeca('e', 1, new Torre(tabuleiro, Cor.WHITE));
-		colocarNovaPeca('d', 1, new Rei(tabuleiro, Cor.WHITE));
+		colocarNovaPeca('h', 7, new Torre(tabuleiro, Cor.WHITE));
+		colocarNovaPeca('d', 1, new Torre(tabuleiro, Cor.WHITE));
+		colocarNovaPeca('e', 1, new Rei(tabuleiro, Cor.WHITE));
 
-		colocarNovaPeca('c', 7, new Torre(tabuleiro, Cor.BLACK));
-		colocarNovaPeca('c', 8, new Torre(tabuleiro, Cor.BLACK));
-		colocarNovaPeca('d', 7, new Torre(tabuleiro, Cor.BLACK));
-		colocarNovaPeca('e', 7, new Torre(tabuleiro, Cor.BLACK));
-		colocarNovaPeca('e', 8, new Torre(tabuleiro, Cor.BLACK));
-		colocarNovaPeca('d', 8, new Rei(tabuleiro, Cor.BLACK));
+		colocarNovaPeca('b', 8, new Torre(tabuleiro, Cor.BLACK));
+		colocarNovaPeca('a', 8, new Rei(tabuleiro, Cor.BLACK));
 	}
 }
