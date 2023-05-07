@@ -26,15 +26,25 @@ public class PartidaXadrez {
 		return matriz;
 	}
 	
-	// Método para colocar uma nova peça 
+	// Método para colocar uma nova peça já convertendo a posição de matriz padrão para o padrão do xadrez
 	private void colocarNovaPeca(char coluna, int linha, PecaXadrez peca) {
 		tabuleiro.colocarPeca(peca, new PosicaoXadrez(coluna, linha).toPosicao());
 	}
 	
 	// Método responsável por iniciar a partida de xadrez colocando as peças no tabuleiro
 	private void configInicial() {
-		colocarNovaPeca('b', 6, new Torre(tabuleiro, Cor.WHITE));
-		colocarNovaPeca('e', 8, new Rei(tabuleiro, Cor.BLACK));
-		colocarNovaPeca('e', 1, new Rei(tabuleiro, Cor.WHITE));
+		colocarNovaPeca('c', 1, new Torre(tabuleiro, Cor.WHITE));
+		colocarNovaPeca('c', 2, new Torre(tabuleiro, Cor.WHITE));
+		colocarNovaPeca('d', 2, new Torre(tabuleiro, Cor.WHITE));
+		colocarNovaPeca('e', 2, new Torre(tabuleiro, Cor.WHITE));
+		colocarNovaPeca('e', 1, new Torre(tabuleiro, Cor.WHITE));
+		colocarNovaPeca('d', 1, new Rei(tabuleiro, Cor.WHITE));
+
+		colocarNovaPeca('c', 7, new Torre(tabuleiro, Cor.BLACK));
+		colocarNovaPeca('c', 8, new Torre(tabuleiro, Cor.BLACK));
+		colocarNovaPeca('d', 7, new Torre(tabuleiro, Cor.BLACK));
+		colocarNovaPeca('e', 7, new Torre(tabuleiro, Cor.BLACK));
+		colocarNovaPeca('e', 8, new Torre(tabuleiro, Cor.BLACK));
+		colocarNovaPeca('d', 8, new Rei(tabuleiro, Cor.BLACK));
 	}
 }
