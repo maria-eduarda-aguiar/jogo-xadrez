@@ -25,31 +25,36 @@ public class Program {
 				System.out.println();
 				System.out.print("Digite a posição de origem: ");
 				PosicaoXadrez origem = UI.lerPosicaoXadrez(sc);
-				
+
 				boolean[][] movimentosPossiveis = partidaXadrez.movimentosPossiveis(origem);
 				UI.limparTela();
 				UI.imprimirTabuleiro(partidaXadrez.getPecas(), movimentosPossiveis);
 				System.out.println();
 				System.out.print("Digite a posição de destino: ");
 				PosicaoXadrez destino = UI.lerPosicaoXadrez(sc);
-				
+
 				PecaXadrez pecaCapturada = partidaXadrez.executarJogadaXadrez(origem, destino);
-				
+
 				if (pecaCapturada != null) {
 					capturada.add(pecaCapturada);
 				}
-				
+
 				if (partidaXadrez.getPromovido() != null) {
-					System.out.print("\nEscolha uma peça abaixo para promoção \n(D - Dama / B - Bispo / T - Torre / C - Cavalo: ");
-					String tipoPeca = sc.nextLine();
-					partidaXadrez.substituirPeaoPromovido(tipoPeca);
+					System.out.print(
+							"\nEscolha uma peça abaixo para promoção \n(D - Dama / B - Bispo / T - Torre / C - Cavalo: ");
+					String tipoPeca = sc.nextLine().toUpperCase();
+					while (!tipoPeca.equals("B") && !tipoPeca.equals("C") && !tipoPeca.equals("B")
+							&& !tipoPeca.equals("T") && !tipoPeca.equals("D")) {
+						System.out.print(
+								"\nValor inválido! Escolha uma peça novamente para promoção\n(D - Dama / B - Bispo / T - Torre / C - Cavalo: ");
+						tipoPeca = sc.nextLine().toUpperCase();
+					}
+					partidaXadrez.substituirPecaPromovida(tipoPeca);
 				}
-			}
-			catch (ExcecaoXadrez e) {
+			} catch (ExcecaoXadrez e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
-			}
-			catch (InputMismatchException e) {
+			} catch (InputMismatchException e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
 			}
