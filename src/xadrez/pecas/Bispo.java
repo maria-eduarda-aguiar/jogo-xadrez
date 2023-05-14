@@ -1,11 +1,16 @@
 package xadrez.pecas;
 
+import java.io.Serializable;
+
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 import xadrez.PecaXadrez;
 import xadrez.Cor;
 
-public class Bispo extends PecaXadrez {
+public class Bispo extends PecaXadrez  implements Serializable {
+
+
+	private static final long serialVersionUID = 1L;
 
 	// Criação do construtor para repassar a chamada para a superclasse
 	public Bispo(Tabuleiro tabuleiro, Cor cor) {

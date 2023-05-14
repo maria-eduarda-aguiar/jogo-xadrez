@@ -1,13 +1,17 @@
 package xadrez.pecas;
 
+import java.io.Serializable;
+
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 import xadrez.Cor;
 import xadrez.PartidaXadrez;
 import xadrez.PecaXadrez;
 
-public class Rei extends PecaXadrez {
+public class Rei extends PecaXadrez  implements Serializable {
 
+
+	private static final long serialVersionUID = 1L;
 	private PartidaXadrez partidaXadrez;
 
 	// Criação do construtor para repassar a chamada para a superclasse

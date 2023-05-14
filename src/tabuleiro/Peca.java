@@ -1,7 +1,11 @@
 package tabuleiro;
 
-public abstract class Peca {
+import java.io.Serializable;
+
+public abstract class Peca implements Serializable {
 	
+
+	private static final long serialVersionUID = 1L;
 	// Implementação do encapsulamento
 	protected Posicao posicao;
 	private Tabuleiro tabuleiro;
@@ -19,6 +23,7 @@ public abstract class Peca {
 	
 	// Método abstrato de movimentos possíveis
 	public abstract boolean[][] movimentosPossiveis();
+	
 	
 	// Método concreto que depende do abstrato para verificar se há movimento possível
 	public boolean movimentoPossivel(Posicao posicao) {

@@ -1,7 +1,11 @@
 package tabuleiro;
 
-public class Tabuleiro {
+import java.io.Serializable;
+
+public class Tabuleiro  implements Serializable {
 	
+
+	private static final long serialVersionUID = 1L;
 	// Implementação do encapsulamento
 	private int linhas;
 	private int colunas;

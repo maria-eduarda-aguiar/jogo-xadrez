@@ -1,11 +1,16 @@
 package xadrez.pecas;
 
+import java.io.Serializable;
+
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 import xadrez.PecaXadrez;
 import xadrez.Cor;
 
-public class Dama extends PecaXadrez {
+public class Dama extends PecaXadrez  implements Serializable {
+
+
+	private static final long serialVersionUID = 1L;
 
 	// Criação do construtor para repassar a chamada para a superclasse
 	public Dama(Tabuleiro tabuleiro, Cor cor) {

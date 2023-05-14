@@ -1,11 +1,15 @@
 package xadrez;
 
+import java.io.Serializable;
+
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 
-public abstract class PecaXadrez extends Peca{
+public abstract class PecaXadrez extends Peca implements Serializable{
 	
+
+	private static final long serialVersionUID = 1L;
 	private Cor cor;
 	private int contadorMovimentos;
 
@@ -17,6 +21,10 @@ public abstract class PecaXadrez extends Peca{
 	// Criação dos getters
 	public Cor getCor() {
 		return cor;
+	}
+	
+	public PecaXadrez getRef() {
+		return this;
 	}
 	
 	public int getContadorMovimentos() {

@@ -1,5 +1,6 @@
 package xadrez;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,8 +16,10 @@ import xadrez.pecas.Rei;
 import xadrez.pecas.Torre;
 
 //Classe que irá conter as regras do jogo
-public class PartidaXadrez {
+public class PartidaXadrez implements Serializable {
 
+
+	private static final long serialVersionUID = 1L;
 	private int turno;
 	private Cor jogadorAtual;
 	private Tabuleiro tabuleiro;
@@ -60,6 +63,7 @@ public class PartidaXadrez {
 	public PecaXadrez getPromovido() {
 		return promovido;
 	}
+
 
 	// Método para retornar uma matriz de peças de xadrez
 	public PecaXadrez[][] getPecas() {

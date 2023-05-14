@@ -3,11 +3,16 @@ package xadrez.pecas;
 import xadrez.PecaXadrez;
 import xadrez.Cor;
 import xadrez.PartidaXadrez;
+
+import java.io.Serializable;
+
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 
-public class Peao extends PecaXadrez {
+public class Peao extends PecaXadrez  implements Serializable {
 
+
+	private static final long serialVersionUID = 1L;
 	private PartidaXadrez partidaXadrez;
 
 	public Peao(Tabuleiro tabuleiro, Cor cor, PartidaXadrez partidaXadrez) {
