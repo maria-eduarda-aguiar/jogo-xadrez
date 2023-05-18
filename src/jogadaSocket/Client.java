@@ -1,7 +1,6 @@
 package jogadaSocket;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -19,15 +18,12 @@ import xadrez.PosicaoXadrez;
 
 public class Client {
 	private final String HOST = "localhost";
-	private final int PORT = 4000;
-	// private final String HOST = "localhost";
-	// private final int PORT = 4000;
+	private final int PORT = 5000;
 	// private final String EXIT_MSG = "exit";
 	private ObjectOutputStream streamOut;
 	private Scanner in;
 	private Cor cor;
 	private Thread thread;
-
 	private Socket socket;
 
 	public Client() throws UnknownHostException, IOException, ClassNotFoundException {
@@ -48,7 +44,6 @@ public class Client {
 		connect();
 		run();
 		disconnect();
-
 	} // fim do método start()
 
 	private void connect() {
@@ -58,11 +53,10 @@ public class Client {
 			System.out.println("Cliente conectado");
 
 			this.streamOut = new ObjectOutputStream(socket.getOutputStream());
-		
-			
-            ClientThread clientThread = new ClientThread(socket);
-            this.thread = new Thread(clientThread);
-            this.thread.start();
+
+			ClientThread clientThread = new ClientThread(socket);
+			this.thread = new Thread(clientThread);
+			this.thread.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,14 +65,11 @@ public class Client {
 	private void run() {
 		try {
 
-	
 			Scanner sc = new Scanner(System.in);
-
 
 			PartidaXadrez partidaXadrez = new PartidaXadrez();
 			List<PecaXadrez> capturadas = new ArrayList<>();
-			
-			
+
 			do {
 				try {
 
@@ -122,13 +113,7 @@ public class Client {
 					System.out.println(e.getMessage());
 					sc.nextLine();
 				}
-				
-			}
-
-			while (!partidaXadrez.getXequeMate());
-
-		
-			
+			} while (!partidaXadrez.getXequeMate());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,6 +152,6 @@ public class Client {
 		} while (!valid);
 
 		return cor;
-	} // fim do método askName()
+	} // fim do método askCor()
 
 } // fim da classe Client
